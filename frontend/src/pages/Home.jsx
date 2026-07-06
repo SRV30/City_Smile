@@ -1,21 +1,26 @@
 import { useEffect, useState } from 'react';
 import AboutClinic from '../components/home/AboutClinic';
 import Hero from '../components/home/Hero';
+import ServicesSection from '../components/home/ServicesSection';
 import StatisticsSection from '../components/home/StatisticsSection';
+import TreatmentProcess from '../components/home/TreatmentProcess';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import { getHome } from '../services/home.service';
+import { getServices } from '../services/services.service';
 
 const Home = () => {
   const [home, setHome] = useState(null);
   const [status, setStatus] = useState('loading');
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
 
-    getHome()
-      .then((response) => {
+    Promise.all([getHome(), getServices()])
+      .then(([homeResponse, servicesResponse]) => {
         if (isMounted) {
-          setHome(response.data);
+          setHome(homeResponse.data);
+          setServices(servicesResponse.data);
           setStatus('success');
         }
       })
@@ -41,8 +46,9 @@ const Home = () => {
       <Hero hero={home?.hero} />
       <StatisticsSection statistics={home?.statistics} />
       <AboutClinic about={home?.aboutPreview} />
+      <ServicesSection services={services} />
       <WhyChooseUs whyChooseUs={home?.whyChooseUs} />
-      <section id="services" className="scroll-mt-28 bg-blue-50 py-20"><div className="container"><p className="text-sm font-bold uppercase text-blue-600">Our Services</p><h2 className="mt-2 text-3xl font-extrabold">Comprehensive Dental Solutions</h2></div></section>
+      <TreatmentProcess process={home?.treatmentProcess} />
       <section id="testimonials" className="container scroll-mt-28 py-20"><p className="text-sm font-bold uppercase text-blue-600">Patient Testimonials</p><h2 className="mt-2 text-3xl font-extrabold">What Our Patients Say</h2></section>
       <section id="gallery" className="scroll-mt-28 bg-blue-50 py-20"><div className="container"><p className="text-sm font-bold uppercase text-blue-600">Our Gallery</p><h2 className="mt-2 text-3xl font-extrabold">Moments of Healthy Smiles</h2></div></section>
       <section id="contact" className="container scroll-mt-28 py-20"><p className="text-sm font-bold uppercase text-blue-600">Contact Us</p><h2 className="mt-2 text-3xl font-extrabold">We are here to help you</h2></section>

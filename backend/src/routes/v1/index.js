@@ -3,6 +3,7 @@ import ApiResponse from '../../utils/ApiResponse.js';
 import asyncHandler from '../../utils/asyncHandler.js';
 import settingsRoutes from './settings.routes.js';
 import homeRoutes from './home.routes.js';
+import serviceRoutes from './service.routes.js';
 
 const router = Router();
 
@@ -18,6 +19,7 @@ router.get('/health', asyncHandler(async (_req, res) => {
 // Settings routes
 router.use('/settings', settingsRoutes);
 router.use('/home', homeRoutes);
+router.use('/services', serviceRoutes);
 
 // Version endpoint
 router.get('/version', asyncHandler(async (_req, res) => {

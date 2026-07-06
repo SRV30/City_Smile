@@ -10,4 +10,13 @@ export const iconMap = {
   comfort: '♡',
   heart: '♡',
   check: '✓',
+  implant: '♙',
+  tooth: '🦷',
+  'tooth-sparkle': '✧',
+  xray: '▧',
+  aligners: '⌘',
+  extraction: '🦷',
+  consultation: '▱',
+  plan: '▣',
+  treatment: '◈',
 };

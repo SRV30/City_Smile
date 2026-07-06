@@ -71,6 +71,28 @@ const aboutPreviewSchema = new mongoose.Schema({
   },
 }, { _id: false });
 
+
+const treatmentStepSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  icon: { type: String, default: 'calendar' },
+}, { _id: false });
+
+const treatmentProcessSchema = new mongoose.Schema({
+  eyebrow: { type: String, default: 'Our Treatment Journey' },
+  heading: { type: String, required: true, default: 'Your Smile, Our Responsibility' },
+  steps: {
+    type: [treatmentStepSchema],
+    default: [
+      { title: 'Book Appointment', description: 'Schedule your visit easily.', icon: 'calendar' },
+      { title: 'Consultation', description: 'Detailed check-up & diagnosis.', icon: 'consultation' },
+      { title: 'Treatment Plan', description: 'Personalized plan for your needs.', icon: 'plan' },
+      { title: 'Quality Treatment', description: 'Advanced treatment with care.', icon: 'treatment' },
+      { title: 'Healthy Smile', description: 'Leave with a confident smile!', icon: 'tooth' },
+    ],
+  },
+}, { _id: false });
+
 const heroSchema = new mongoose.Schema({
   eyebrow: { type: String, default: 'Trusted Dental Care for Your Family' },
   heading: { type: String, required: true, default: 'Healthy Smile, Healthy Life' },
@@ -118,6 +140,7 @@ const homeSchema = new mongoose.Schema({
   statistics: { type: [statisticSchema], default: defaultStatistics },
   aboutPreview: { type: aboutPreviewSchema, default: () => ({}) },
   whyChooseUs: { type: whyChooseUsSchema, default: () => ({}) },
+  treatmentProcess: { type: treatmentProcessSchema, default: () => ({}) },
 }, { timestamps: true });
 
 export const Home = mongoose.model('Home', homeSchema);

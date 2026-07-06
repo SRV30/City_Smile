@@ -3,6 +3,7 @@ import MainLayout from '../layout/MainLayout';
 import Home from '../pages/Home';
 import Doctor from '../pages/Doctor';
 import Gallery from '../pages/Gallery';
+import ServiceDetail from '../pages/ServiceDetail';
 import AdminLogin from '../pages/AdminLogin';
 import AdminDashboard from '../pages/AdminDashboard';
 
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/doctor" element={<Doctor />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/services/:slug" element={<ServiceDetail />} />
       </Route>
 
       {/* Admin Routes */}
