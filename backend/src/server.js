@@ -1,45 +1,31 @@
-import express from "express";
-import cors from "cors";
+import app from './app.js';
+import connectDb from './db/connect.js';
+import env from './config/env.js';
 
-import env from "./config/env.js";
-import routes from "./routes/index.js"; 
-import connectDb from "./db/connect.js";
-import errorHandler from "./middlewares/errorHandler.js";
+const startServer = async () => {
+  try {
+    // Connect to Database
+    await connectDb().catch(err => {
+        console.error(`MongoDB Connection Failed: ${err.message}`);
+        // In some cases you might want to exit, but for demonstration we can continue
+        // process.exit(1);
+    });
 
-const app = express();
+    const PORT = env.port || 5000;
+    const server = app.listen(PORT, () => {
+      console.log(`Server is running in ${env.nodeEnv} mode on port ${PORT}`);
+    });
 
-app.use(
-  cors({
-    origin: [
-      env.clientUrl,
-      env.clientUrlDev,
-      env.localUrl,
-    //   "https://saubhagyamastro.in",
-    //   "https://www.saubhagyamastro.in",
-    ],
-    credentials: true,
-  })
-);
+    // Handle server shutdown
+    process.on('unhandledRejection', (err) => {
+      console.log(`Error: ${err.message}`);
+      server.close(() => process.exit(1));
+    });
 
-app.use(express.json());
+  } catch (error) {
+    console.error(`Error during startup: ${error.message}`);
+    process.exit(1);
+  }
+};
 
-app.get("/", (_req, res) => {
-  res.json({
-    success: true,
-    message: "Citysmile backend API Running",
-  });
-});
-
-app.use("/api", routes);
-
-app.use(errorHandler);
-
-connectDb()
-  .then(() => {
-    console.log("MongoDB Connected");
-  })
-  .catch((error) => {
-    console.error("MongoDB Connection Failed", error.message);
-  });
-
-export default app;
+startServer();
