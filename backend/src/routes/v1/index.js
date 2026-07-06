@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import ApiResponse from '../../utils/ApiResponse.js';
 import asyncHandler from '../../utils/asyncHandler.js';
+import settingsRoutes from './settings.routes.js';
 
 const router = Router();
 
@@ -12,6 +13,9 @@ router.get('/health', asyncHandler(async (_req, res) => {
     }, 'Citysmile backend API is healthy')
   );
 }));
+
+// Settings routes
+router.use('/settings', settingsRoutes);
 
 // Version endpoint
 router.get('/version', asyncHandler(async (_req, res) => {
