@@ -1,11 +1,4 @@
-const iconMap = {
-  users: '👥',
-  award: '🏅',
-  shield: '🛡️',
-  star: '☆',
-  calendar: '📅',
-  phone: '📞',
-};
+import { iconMap } from './iconMap';
 
 const Stars = ({ rating = 5 }) => (
   <span className="text-yellow-400 tracking-[2px]" aria-label={`${rating} star rating`}>
@@ -61,20 +54,6 @@ const Hero = ({ hero }) => {
         <div className="relative z-0 self-end lg:absolute lg:bottom-0 lg:right-0 lg:w-[58%]">
           <img src={hero.heroImage} alt={hero.heroImageAlt} className="ml-auto max-h-[590px] w-full object-cover object-center lg:[clip-path:inset(0_0_0_0_round_0)]" />
           <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[#062f77] to-transparent lg:hidden" />
-        </div>
-      </div>
-
-      <div className="container relative -mt-16 pb-10">
-        <div className="grid gap-4 rounded-2xl bg-white p-5 text-slate-950 shadow-2xl shadow-blue-950/20 sm:grid-cols-2 lg:grid-cols-4 lg:p-6">
-          {hero.statistics?.map((stat) => (
-            <div key={`${stat.value}-${stat.label}`} className="flex items-center gap-4 rounded-xl p-3">
-              <div className="grid h-14 w-14 place-items-center rounded-full bg-blue-50 text-2xl text-blue-600">{iconMap[stat.icon] || stat.icon}</div>
-              <div>
-                <p className="text-2xl font-extrabold">{stat.value}</p>
-                <p className="text-sm text-slate-600">{stat.label}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>
