@@ -4,28 +4,25 @@ import env from './config/env.js';
 
 const startServer = async () => {
   try {
-    // Connect to Database
-    await connectDb().catch(err => {
-        console.error(`MongoDB Connection Failed: ${err.message}`);
-        // In some cases you might want to exit, but for demonstration we can continue
-        // process.exit(1);
-    });
+    // 1. Connect to MongoDB before starting server
+    await connectDb();
+    console.log('MongoDB connection established');
 
+    // 2. Start Express server
     const PORT = env.port || 5000;
-    const server = app.listen(PORT, () => {
-      console.log(`Server is running in ${env.nodeEnv} mode on port ${PORT}`);
-    });
-
-    // Handle server shutdown
-    process.on('unhandledRejection', (err) => {
-      console.log(`Error: ${err.message}`);
-      server.close(() => process.exit(1));
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
 
   } catch (error) {
-    console.error(`Error during startup: ${error.message}`);
+    console.error('Failed to start server:', error.message);
     process.exit(1);
   }
 };
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+  console.log(`Unhandled Rejection: ${err.message}`);
+});
 
 startServer();
