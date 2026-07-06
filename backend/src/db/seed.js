@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import env from '../config/env.js';
 import { Settings } from '../models/Settings.model.js';
+import { Home } from '../models/Home.model.js';
 import connectDb from './connect.js';
 
 const seedData = {
@@ -16,19 +17,46 @@ const seedData = {
   googleMapUrl: 'https://maps.google.com/?cid=9116603819458276680'
 };
 
+const homeSeedData = {
+  hero: {
+    heading: 'Your Smile, Our Passion: Excellence in Dental Care',
+    subHeading: 'Experience Comprehensive & Gentle Dentistry',
+    description: 'At City Smile Dental Clinic, we combine advanced technology with a compassionate approach to give you the perfect smile you deserve. From routine checkups to advanced implants, we are here for you.',
+    ctaButtons: [
+      { text: 'Book Appointment', link: '#appointment', variant: 'primary' },
+      { text: 'Explore Services', link: '#services', variant: 'secondary' }
+    ],
+    heroImage: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2070&auto=format&fit=crop',
+    statistics: [
+      { value: '10+', label: 'Years Experience' },
+      { value: '5000+', label: 'Happy Patients' },
+      { value: '15+', label: 'Expert Doctors' }
+    ]
+  }
+};
+
 const seedDatabase = async () => {
   try {
     await connectDb();
 
-    // Check if settings already exist
+    // Seed Settings
     const existingSettings = await Settings.findOne();
-
     if (existingSettings) {
-      console.log('Settings already exist. Updating with seed data...');
+      console.log('Settings already exist. Updating...');
       await Settings.findOneAndUpdate({}, seedData);
     } else {
-      console.log('No settings found. Creating initial settings...');
+      console.log('Creating initial settings...');
       await Settings.create(seedData);
+    }
+
+    // Seed Home
+    const existingHome = await Home.findOne();
+    if (existingHome) {
+      console.log('Home content already exists. Updating...');
+      await Home.findOneAndUpdate({}, homeSeedData);
+    } else {
+      console.log('Creating initial home content...');
+      await Home.create(homeSeedData);
     }
 
     console.log('Database seeded successfully!');
