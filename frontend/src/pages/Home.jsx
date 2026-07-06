@@ -1,26 +1,41 @@
 import { useEffect, useState } from 'react';
 import AboutClinic from '../components/home/AboutClinic';
+import ContactSection from '../components/home/ContactSection';
+import FaqSection from '../components/home/FaqSection';
+import GalleryPreview from '../components/home/GalleryPreview';
 import Hero from '../components/home/Hero';
 import ServicesSection from '../components/home/ServicesSection';
 import StatisticsSection from '../components/home/StatisticsSection';
+import TestimonialsSection from '../components/home/TestimonialsSection';
 import TreatmentProcess from '../components/home/TreatmentProcess';
 import WhyChooseUs from '../components/home/WhyChooseUs';
+import { useSettings } from '../context/SettingsContext';
 import { getHome } from '../services/home.service';
+import { getContactContent, getFaqs, getGalleryPreview, getTestimonials } from '../services/publicContent.service';
 import { getServices } from '../services/services.service';
 
 const Home = () => {
   const [home, setHome] = useState(null);
   const [status, setStatus] = useState('loading');
   const [services, setServices] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [galleryPreview, setGalleryPreview] = useState(null);
+  const [contact, setContact] = useState(null);
+  const { settings, loading: settingsLoading } = useSettings();
 
   useEffect(() => {
     let isMounted = true;
 
-    Promise.all([getHome(), getServices()])
-      .then(([homeResponse, servicesResponse]) => {
+    Promise.all([getHome(), getServices(), getTestimonials(), getFaqs(), getGalleryPreview(), getContactContent()])
+      .then(([homeResponse, servicesResponse, testimonialsResponse, faqsResponse, galleryResponse, contactResponse]) => {
         if (isMounted) {
           setHome(homeResponse.data);
           setServices(servicesResponse.data);
+          setTestimonials(testimonialsResponse.data);
+          setFaqs(faqsResponse.data);
+          setGalleryPreview(galleryResponse.data);
+          setContact(contactResponse.data);
           setStatus('success');
         }
       })
@@ -33,7 +48,7 @@ const Home = () => {
     };
   }, []);
 
-  if (status === 'loading') {
+  if (status === 'loading' || settingsLoading) {
     return <div className="grid min-h-screen place-items-center bg-[#062f77] text-white">Loading...</div>;
   }
 
@@ -49,10 +64,10 @@ const Home = () => {
       <ServicesSection services={services} />
       <WhyChooseUs whyChooseUs={home?.whyChooseUs} />
       <TreatmentProcess process={home?.treatmentProcess} />
-      <section id="testimonials" className="container scroll-mt-28 py-20"><p className="text-sm font-bold uppercase text-blue-600">Patient Testimonials</p><h2 className="mt-2 text-3xl font-extrabold">What Our Patients Say</h2></section>
-      <section id="gallery" className="scroll-mt-28 bg-blue-50 py-20"><div className="container"><p className="text-sm font-bold uppercase text-blue-600">Our Gallery</p><h2 className="mt-2 text-3xl font-extrabold">Moments of Healthy Smiles</h2></div></section>
-      <section id="contact" className="container scroll-mt-28 py-20"><p className="text-sm font-bold uppercase text-blue-600">Contact Us</p><h2 className="mt-2 text-3xl font-extrabold">We are here to help you</h2></section>
-      <section id="appointment" className="scroll-mt-28 bg-[#062f77] py-20 text-white"><div className="container"><p className="text-sm font-bold uppercase text-blue-200">Book Appointment</p><h2 className="mt-2 text-3xl font-extrabold">Get in Touch Today!</h2></div></section>
+      <TestimonialsSection testimonials={testimonials} />
+      <GalleryPreview gallery={galleryPreview} />
+      <FaqSection faqs={faqs} />
+      <ContactSection contact={contact} settings={settings} />
     </>
   );
 };

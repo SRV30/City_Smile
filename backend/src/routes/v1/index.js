@@ -4,6 +4,7 @@ import asyncHandler from '../../utils/asyncHandler.js';
 import settingsRoutes from './settings.routes.js';
 import homeRoutes from './home.routes.js';
 import serviceRoutes from './service.routes.js';
+import publicContentRoutes from './public-content.routes.js';
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.get('/health', asyncHandler(async (_req, res) => {
 router.use('/settings', settingsRoutes);
 router.use('/home', homeRoutes);
 router.use('/services', serviceRoutes);
+router.use('/', publicContentRoutes);
 
 // Version endpoint
 router.get('/version', asyncHandler(async (_req, res) => {
