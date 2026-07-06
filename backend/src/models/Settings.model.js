@@ -25,11 +25,11 @@ const settingsSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  emailClinic: {
+  clinicEmail: {
     type: String,
     required: true
   },
-  emailPersonal: {
+  personalEmail: {
     type: String,
     required: true
   },
@@ -38,6 +38,10 @@ const settingsSchema = new mongoose.Schema({
     required: true
   },
   googleMapEmbed: {
+    type: String,
+    required: true
+  },
+  googleMapUrl: {
     type: String,
     required: true
   }
