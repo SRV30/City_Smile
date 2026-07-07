@@ -4,16 +4,17 @@ import asyncHandler from '../../utils/asyncHandler.js';
 import settingsRoutes from './settings.routes.js';
 import homeRoutes from './home.routes.js';
 import serviceRoutes from './service.routes.js';
-import publicContentRoutes from './public-content.routes.js';
+import publicContentRoutes from './publicContent.routes.js';
 import doctorRoutes from './doctor.routes.js';
 import galleryRoutes from './gallery.routes.js';
+import { STATUS_CODES } from '../../constants/index.js';
 
 const router = Router();
 
 // Health check endpoint
 router.get('/health', asyncHandler(async (_req, res) => {
-  return res.status(200).json(
-    new ApiResponse(200, {
+  return res.status(STATUS_CODES.OK).json(
+    new ApiResponse(STATUS_CODES.OK, {
       timestamp: new Date().toISOString(),
     }, 'Citysmile backend API is healthy')
   );
@@ -29,8 +30,8 @@ router.use('/', publicContentRoutes);
 
 // Version endpoint
 router.get('/version', asyncHandler(async (_req, res) => {
-  return res.status(200).json(
-    new ApiResponse(200, {
+  return res.status(STATUS_CODES.OK).json(
+    new ApiResponse(STATUS_CODES.OK, {
       projectName: 'City Smile Dental Clinic',
       apiVersion: '1.0.0',
       nodeVersion: process.version,

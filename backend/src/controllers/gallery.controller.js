@@ -3,6 +3,7 @@ import ApiError from '../utils/ApiError.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import cloudinary from '../config/cloudinary.js';
+import { STATUS_CODES } from '../constants/index.js';
 
 /**
  * @desc    Get all active gallery images with filtering, search, and pagination
@@ -38,8 +39,8 @@ export const getGalleryImages = asyncHandler(async (req, res) => {
 
   const total = await Gallery.countDocuments(query);
 
-  return res.status(200).json(
-    new ApiResponse(200, {
+  return res.status(STATUS_CODES.OK).json(
+    new ApiResponse(STATUS_CODES.OK, {
       images,
       pagination: {
         total,
@@ -60,11 +61,11 @@ export const getGalleryImageById = asyncHandler(async (req, res) => {
   const image = await Gallery.findById(req.params.id);
 
   if (!image) {
-    throw new ApiError(404, 'Gallery image not found');
+    throw new ApiError(STATUS_CODES.NOT_FOUND, 'Gallery image not found');
   }
 
-  return res.status(200).json(
-    new ApiResponse(200, image, 'Gallery image fetched successfully')
+  return res.status(STATUS_CODES.OK).json(
+    new ApiResponse(STATUS_CODES.OK, image, 'Gallery image fetched successfully')
   );
 });
 
@@ -75,13 +76,13 @@ export const getGalleryImageById = asyncHandler(async (req, res) => {
  */
 export const uploadGalleryImages = asyncHandler(async (req, res) => {
   if (!req.files || req.files.length === 0) {
-    throw new ApiError(400, 'Please upload at least one image');
+    throw new ApiError(STATUS_CODES.BAD_REQUEST, 'Please upload at least one image');
   }
 
   const { title, caption, category, displayOrder, featured, isActive } = req.body;
 
   if (!title || !category) {
-    throw new ApiError(400, 'Title and Category are required');
+    throw new ApiError(STATUS_CODES.BAD_REQUEST, 'Title and Category are required');
   }
 
   const uploadPromises = req.files.map((file) => {
@@ -115,8 +116,8 @@ export const uploadGalleryImages = asyncHandler(async (req, res) => {
 
   const savedImages = await Gallery.insertMany(galleryEntries);
 
-  return res.status(201).json(
-    new ApiResponse(201, savedImages, 'Gallery images uploaded successfully')
+  return res.status(STATUS_CODES.CREATED).json(
+    new ApiResponse(STATUS_CODES.CREATED, savedImages, 'Gallery images uploaded successfully')
   );
 });
 
@@ -131,7 +132,7 @@ export const updateGalleryImage = asyncHandler(async (req, res) => {
   const image = await Gallery.findById(req.params.id);
 
   if (!image) {
-    throw new ApiError(404, 'Gallery image not found');
+    throw new ApiError(STATUS_CODES.NOT_FOUND, 'Gallery image not found');
   }
 
   const updatedImage = await Gallery.findByIdAndUpdate(
@@ -148,8 +149,8 @@ export const updateGalleryImage = asyncHandler(async (req, res) => {
     { new: true, runValidators: true }
   );
 
-  return res.status(200).json(
-    new ApiResponse(200, updatedImage, 'Gallery image updated successfully')
+  return res.status(STATUS_CODES.OK).json(
+    new ApiResponse(STATUS_CODES.OK, updatedImage, 'Gallery image updated successfully')
   );
 });
 
@@ -162,7 +163,7 @@ export const deleteGalleryImage = asyncHandler(async (req, res) => {
   const image = await Gallery.findById(req.params.id);
 
   if (!image) {
-    throw new ApiError(404, 'Gallery image not found');
+    throw new ApiError(STATUS_CODES.NOT_FOUND, 'Gallery image not found');
   }
 
   // Delete from Cloudinary
@@ -172,7 +173,7 @@ export const deleteGalleryImage = asyncHandler(async (req, res) => {
 
   await Gallery.findByIdAndDelete(req.params.id);
 
-  return res.status(200).json(
-    new ApiResponse(200, null, 'Gallery image deleted successfully')
+  return res.status(STATUS_CODES.OK).json(
+    new ApiResponse(STATUS_CODES.OK, null, 'Gallery image deleted successfully')
   );
 });

@@ -2,6 +2,8 @@ import { Service } from '../models/Service.model.js';
 import ApiError from '../utils/ApiError.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import { ensureDefaults } from '../utils/modelHelpers.js';
+import { STATUS_CODES } from '../constants/index.js';
 
 const defaultServices = [
   {
@@ -54,41 +56,33 @@ const defaultServices = [
   },
 ];
 
-const ensureDefaultServices = async () => {
-  const count = await Service.countDocuments();
-
-  if (count === 0) {
-    await Service.insertMany(defaultServices, { ordered: true });
-  }
-};
-
 export const getServices = asyncHandler(async (_req, res) => {
-  await ensureDefaultServices();
+  await ensureDefaults(Service, defaultServices);
   const services = await Service.find().sort({ displayOrder: 1, title: 1 });
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, services, 'Services fetched successfully'));
+    .status(STATUS_CODES.OK)
+    .json(new ApiResponse(STATUS_CODES.OK, services, 'Services fetched successfully'));
 });
 
 export const getServiceBySlug = asyncHandler(async (req, res) => {
   const service = await Service.findOne({ slug: req.params.slug });
 
   if (!service) {
-    throw new ApiError(404, 'Service not found');
+    throw new ApiError(STATUS_CODES.NOT_FOUND, 'Service not found');
   }
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, service, 'Service fetched successfully'));
+    .status(STATUS_CODES.OK)
+    .json(new ApiResponse(STATUS_CODES.OK, service, 'Service fetched successfully'));
 });
 
 export const createService = asyncHandler(async (req, res) => {
   const service = await Service.create(req.body);
 
   return res
-    .status(201)
-    .json(new ApiResponse(201, service, 'Service created successfully'));
+    .status(STATUS_CODES.CREATED)
+    .json(new ApiResponse(STATUS_CODES.CREATED, service, 'Service created successfully'));
 });
 
 export const updateService = asyncHandler(async (req, res) => {
@@ -99,22 +93,22 @@ export const updateService = asyncHandler(async (req, res) => {
   );
 
   if (!service) {
-    throw new ApiError(404, 'Service not found');
+    throw new ApiError(STATUS_CODES.NOT_FOUND, 'Service not found');
   }
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, service, 'Service updated successfully'));
+    .status(STATUS_CODES.OK)
+    .json(new ApiResponse(STATUS_CODES.OK, service, 'Service updated successfully'));
 });
 
 export const deleteService = asyncHandler(async (req, res) => {
   const service = await Service.findByIdAndDelete(req.params.id);
 
   if (!service) {
-    throw new ApiError(404, 'Service not found');
+    throw new ApiError(STATUS_CODES.NOT_FOUND, 'Service not found');
   }
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, service, 'Service deleted successfully'));
+    .status(STATUS_CODES.OK)
+    .json(new ApiResponse(STATUS_CODES.OK, service, 'Service deleted successfully'));
 });

@@ -11,12 +11,13 @@ import { upload } from '../../middlewares/upload.middleware.js';
 const router = Router();
 
 // Public routes
-router.get('/', getGalleryImages);
-router.get('/:id', getGalleryImageById);
+router.route('/')
+  .get(getGalleryImages)
+  .post(upload.array('images', 20), uploadGalleryImages);
 
-// Admin routes (TODO: Add auth middleware when authentication is implemented)
-router.post('/', upload.array('images', 20), uploadGalleryImages);
-router.put('/:id', updateGalleryImage);
-router.delete('/:id', deleteGalleryImage);
+router.route('/:id')
+  .get(getGalleryImageById)
+  .put(updateGalleryImage)
+  .delete(deleteGalleryImage);
 
 export default router;

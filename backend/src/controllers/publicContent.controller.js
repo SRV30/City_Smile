@@ -4,6 +4,8 @@ import { GalleryPreview } from '../models/GalleryPreview.model.js';
 import { Testimonial } from '../models/Testimonial.model.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import { ensureDefaults, getSingleton } from '../utils/modelHelpers.js';
+import { STATUS_CODES } from '../constants/index.js';
 
 const defaultTestimonials = [
   { patientName: 'Rakesh Kumar', treatment: 'Dental Implant', quote: 'Very professional and friendly doctor. My dental implant was completely painless. Highly recommended!', rating: 5, avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=96&q=80', displayOrder: 1 },
@@ -18,38 +20,25 @@ const defaultFaqs = [
   { question: 'What dental services are available?', answer: 'We provide dental implants, root canal treatment, teeth whitening, dental X-rays, braces, aligners, and tooth extraction.', displayOrder: 4 },
 ];
 
-const ensureCollectionDefaults = async (Model, defaults) => {
-  const count = await Model.countDocuments();
-  if (count === 0) await Model.insertMany(defaults, { ordered: true });
-};
-
 export const getTestimonials = asyncHandler(async (_req, res) => {
-  await ensureCollectionDefaults(Testimonial, defaultTestimonials);
+  await ensureDefaults(Testimonial, defaultTestimonials);
   const testimonials = await Testimonial.find().sort({ displayOrder: 1, patientName: 1 });
-  return res.status(200).json(new ApiResponse(200, testimonials, 'Testimonials fetched successfully'));
+  return res.status(STATUS_CODES.OK).json(new ApiResponse(STATUS_CODES.OK, testimonials, 'Testimonials fetched successfully'));
 });
 
 export const getFaqs = asyncHandler(async (_req, res) => {
-  await ensureCollectionDefaults(Faq, defaultFaqs);
+  await ensureDefaults(Faq, defaultFaqs);
   const faqs = await Faq.find().sort({ displayOrder: 1, question: 1 });
-  return res.status(200).json(new ApiResponse(200, faqs, 'FAQs fetched successfully'));
+  return res.status(STATUS_CODES.OK).json(new ApiResponse(STATUS_CODES.OK, faqs, 'FAQs fetched successfully'));
 });
 
 export const getGalleryPreview = asyncHandler(async (_req, res) => {
-  const galleryPreview = await GalleryPreview.findOneAndUpdate(
-    {},
-    { $setOnInsert: {} },
-    { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true }
-  );
+  const galleryPreview = await getSingleton(GalleryPreview);
   galleryPreview.images.sort((a, b) => a.displayOrder - b.displayOrder);
-  return res.status(200).json(new ApiResponse(200, galleryPreview, 'Gallery preview fetched successfully'));
+  return res.status(STATUS_CODES.OK).json(new ApiResponse(STATUS_CODES.OK, galleryPreview, 'Gallery preview fetched successfully'));
 });
 
 export const getContact = asyncHandler(async (_req, res) => {
-  const contact = await Contact.findOneAndUpdate(
-    {},
-    { $setOnInsert: {} },
-    { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true }
-  );
-  return res.status(200).json(new ApiResponse(200, contact, 'Contact content fetched successfully'));
+  const contact = await getSingleton(Contact);
+  return res.status(STATUS_CODES.OK).json(new ApiResponse(STATUS_CODES.OK, contact, 'Contact content fetched successfully'));
 });
