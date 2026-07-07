@@ -1,69 +1,143 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button, IconBadge } from "./UI";
+import { useSettings } from "../context/SettingsContext";
+import useAuth from "../hooks/useAuth";
 
 const navItems = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Contact', href: '#contact' },
+  { label: "Home", href: "/#home" },
+  { label: "About", href: "/#about" },
+  { label: "Services", href: "/#services" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Contact", href: "/#contact" },
 ];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const { settings } = useSettings();
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
-  const closeMenu = () => setIsOpen(false);
+  const isHomePage = location.pathname === "/";
+
+  const handleAnchor = (href) => {
+    setOpen(false);
+    if (href.includes("#") && !isHomePage) {
+      window.location.href = href;
+      return;
+    }
+    const id = href.split("#")[1];
+    if (!id) return;
+    const el = document.getElementById(id);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `/#${id}`);
+  };
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-50 py-4 text-white">
-      <div className="container">
-        <div className="flex items-center justify-between rounded-2xl bg-[#062f77]/80 px-4 py-3 shadow-2xl shadow-blue-950/20 backdrop-blur-xl lg:bg-transparent lg:shadow-none">
-          <Link to="/" className="flex items-center gap-3" onClick={closeMenu}>
-            <img src={logo} alt="City Smile Dental Clinic" className="h-12 w-auto" />
-          </Link>
+    <header className="fixed inset-x-0 top-0 z-50 px-3 py-3 md:px-5">
+      <div className="mx-auto max-w-7xl">
+        <div className="rounded-3xl border border-white/20 bg-[#0b3f9a]/90 px-4 py-3 text-white shadow-[0_18px_50px_rgba(2,8,23,0.18)] backdrop-blur-xl">
+          <div className="flex items-center justify-between gap-4">
+            <Link to="/" className="flex items-center gap-3">
+              <img
+                src="/logo.png"
+                alt={settings.clinicName}
+                className="h-11 w-auto"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+              <div className="hidden sm:block">
+                <p className="text-sm font-bold leading-none">
+                  {settings.clinicName}
+                </p>
+                <p className="text-[11px] tracking-[0.18em] text-blue-100">
+                  DENTAL CLINIC
+                </p>
+              </div>
+            </Link>
 
-          <div className="hidden items-center gap-8 text-sm font-semibold lg:flex">
-            {navItems.map((item) => (
-              <a key={item.href} href={item.href} className="transition hover:text-blue-200">
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-          <a href="#appointment" className="hidden rounded-lg bg-blue-500 px-6 py-3 text-sm font-bold shadow-lg shadow-blue-950/20 transition hover:bg-blue-400 lg:inline-flex">
-            Book Appointment
-          </a>
-
-          <button
-            type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/20 text-2xl lg:hidden"
-            aria-label="Toggle navigation menu"
-            aria-expanded={isOpen}
-            onClick={() => setIsOpen((value) => !value)}
-          >
-            {isOpen ? '×' : '☰'}
-          </button>
-        </div>
-
-        {isOpen && (
-          <div className="mt-3 rounded-2xl bg-[#062f77] p-4 shadow-2xl lg:hidden">
-            <div className="grid gap-2">
+            <nav className="hidden items-center gap-8 text-sm font-semibold lg:flex">
               {navItems.map((item) => (
-                <a key={item.href} href={item.href} onClick={closeMenu} className="rounded-xl px-4 py-3 font-semibold hover:bg-white/10">
+                <button
+                  key={item.href}
+                  type="button"
+                  onClick={() => handleAnchor(item.href)}
+                  className="transition hover:text-blue-200"
+                >
                   {item.label}
-                </a>
+                </button>
               ))}
-              <a href="#appointment" onClick={closeMenu} className="mt-2 rounded-xl bg-blue-500 px-4 py-3 text-center font-bold">
+            </nav>
+
+            <div className="flex items-center gap-3">
+              {isAuthenticated ? (
+                <Button
+                  as={Link}
+                  to="/admin"
+                  variant="secondary"
+                  className="hidden md:inline-flex"
+                >
+                  Admin Panel
+                </Button>
+              ) : null}
+
+              <Button
+                as="a"
+                href="#contact"
+                variant="secondary"
+                className="hidden md:inline-flex"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAnchor("/#contact");
+                }}
+              >
                 Book Appointment
-              </a>
+              </Button>
+
+              <button
+                type="button"
+                className="grid h-11 w-11 place-items-center rounded-2xl border border-white/20 bg-white/10 text-2xl lg:hidden"
+                onClick={() => setOpen((v) => !v)}
+                aria-label="Toggle menu"
+              >
+                {open ? "×" : "☰"}
+              </button>
             </div>
           </div>
-        )}
-      </div>
-    </nav>
-  );
-};
 
-export default Navbar;
+          {open ? (
+            <div className="mt-4 grid gap-2 rounded-[20px] bg-[#082f77] p-3 lg:hidden">
+              {navItems.map((item) => (
+                <button
+                  key={item.href}
+                  type="button"
+                  onClick={() => handleAnchor(item.href)}
+                  className="rounded-2xl px-4 py-3 text-left text-sm font-semibold hover:bg-white/10"
+                >
+                  {item.label}
+                </button>
+              ))}
+              {isAuthenticated ? (
+                <Link
+                  to="/admin"
+                  className="rounded-2xl bg-white px-4 py-3 text-center text-sm font-bold text-[#082f77]"
+                >
+                  Admin Panel
+                </Link>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => handleAnchor("/#contact")}
+                className="rounded-2xl bg-blue-500 px-4 py-3 text-sm font-bold text-white"
+              >
+                Book Appointment
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </header>
+  );
+}

@@ -1,42 +1,49 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { getSettings } from '../services/settings.service';
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { fetchSettings } from "../services/content.service";
+import { fallbackSettings } from "../data/fallbackContent";
 
-const SettingsContext = createContext();
+const SettingsContext = createContext(null);
 
-export const SettingsProvider = ({ children }) => {
-  const [settings, setSettings] = useState(null);
+export function SettingsProvider({ children }) {
+  const [settings, setSettings] = useState(fallbackSettings);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const fetchSettings = async () => {
+  const loadSettings = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const data = await getSettings();
-      setSettings(data);
-      setError(null);
-    } catch (err) {
-      setError('Failed to load clinic settings');
-      console.error(err);
+      const data = await fetchSettings();
+      if (data && typeof data === "object") {
+        setSettings((prev) => ({ ...prev, ...data }));
+      }
+    } catch {
+      setSettings(fallbackSettings);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchSettings();
+    loadSettings();
   }, []);
 
+  const value = useMemo(
+    () => ({
+      settings,
+      loading,
+      refreshSettings: loadSettings,
+    }),
+    [settings, loading],
+  );
+
   return (
-    <SettingsContext.Provider value={{ settings, loading, error, refreshSettings: fetchSettings }}>
+    <SettingsContext.Provider value={value}>
       {children}
     </SettingsContext.Provider>
   );
-};
+}
 
 export const useSettings = () => {
-  const context = useContext(SettingsContext);
-  if (!context) {
-    throw new Error('useSettings must be used within a SettingsProvider');
-  }
-  return context;
+  const ctx = useContext(SettingsContext);
+  if (!ctx) throw new Error("useSettings must be used inside SettingsProvider");
+  return ctx;
 };
