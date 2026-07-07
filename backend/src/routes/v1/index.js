@@ -6,6 +6,7 @@ import homeRoutes from './home.routes.js';
 import serviceRoutes from './service.routes.js';
 import publicContentRoutes from './public-content.routes.js';
 import doctorRoutes from './doctor.routes.js';
+import galleryRoutes from './gallery.routes.js';
 
 const router = Router();
 
@@ -23,6 +24,7 @@ router.use('/settings', settingsRoutes);
 router.use('/home', homeRoutes);
 router.use('/services', serviceRoutes);
 router.use('/doctor', doctorRoutes);
+router.use('/gallery', galleryRoutes);
 router.use('/', publicContentRoutes);
 
 // Version endpoint
