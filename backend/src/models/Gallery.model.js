@@ -14,7 +14,7 @@ const gallerySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Category is required'],
     enum: {
-      values: ['Clinic', 'Treatment', 'Camp', 'Certificates', 'Events', 'BeforeAfter', 'Other'],
+      values: ['Clinic', 'Treatment', 'Camp', 'Certificates', 'Events', 'BeforeAfter', 'Others'],
       message: '{VALUE} is not a valid category',
     },
     index: true,

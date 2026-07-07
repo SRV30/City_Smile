@@ -9,6 +9,9 @@ import doctorRoutes from "./doctor.routes.js";
 import galleryRoutes from "./gallery.routes.js";
 import authRoutes from "./auth.routes.js";
 import adminRoutes from "./admin.routes.js";
+import interactionRoutes from "./interaction.routes.js";
+import { getDashboardStats } from "../../controllers/stats.controller.js";
+import { verifyJWT } from "../../middlewares/auth.middleware.js";
 
 import { STATUS_CODES } from "../../constants/index.js";
 
@@ -39,6 +42,8 @@ router.use("/gallery", galleryRoutes);
 router.use("/", publicContentRoutes);
 router.use("/auth", authRoutes);
 router.use("/admins", adminRoutes);
+router.use("/interaction", interactionRoutes);
+router.get("/stats", verifyJWT, getDashboardStats);
 
 // Version endpoint
 router.get(

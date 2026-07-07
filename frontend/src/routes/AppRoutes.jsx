@@ -7,8 +7,18 @@ import Home from "../pages/Home";
 import Doctor from "../pages/Doctor";
 import Gallery from "../pages/Gallery";
 import ServiceDetail from "../pages/ServiceDetail";
-import AdminLogin from "../pages/AdminLogin";
-import AdminDashboard from "../pages/AdminDashboard";
+import AdminLogin from "../pages/Admin/Login";
+import AdminDashboard from "../pages/Admin/Dashboard";
+import AdminManagement from "../pages/Admin/AdminManagement";
+import GalleryCMS from "../pages/Admin/GalleryCMS";
+import HomepageCMS from "../pages/Admin/HomepageCMS";
+import DoctorCMS from "../pages/Admin/DoctorCMS";
+import ServicesCMS from "../pages/Admin/ServicesCMS";
+import TestimonialsCMS from "../pages/Admin/TestimonialsCMS";
+import FaqCMS from "../pages/Admin/FaqCMS";
+import Appointments from "../pages/Admin/Appointments";
+import Messages from "../pages/Admin/Messages";
+import SettingsCMS from "../pages/Admin/SettingsCMS";
 import NotFound from "../pages/NotFound";
 import { AuthProvider } from "../context/AuthContext";
 
@@ -56,6 +66,16 @@ export default function AppRoutes() {
             }
           >
             <Route index element={<AdminDashboard />} />
+            <Route path="admins" element={<AdminManagement />} />
+            <Route path="gallery" element={<GalleryCMS />} />
+            <Route path="homepage" element={<HomepageCMS />} />
+            <Route path="doctor" element={<DoctorCMS />} />
+            <Route path="services" element={<ServicesCMS />} />
+            <Route path="testimonials" element={<TestimonialsCMS />} />
+            <Route path="faq" element={<FaqCMS />} />
+            <Route path="appointments" element={<Appointments />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="settings" element={<SettingsCMS />} />
           </Route>
         </AuthProvider>
 

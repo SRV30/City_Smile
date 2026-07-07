@@ -20,6 +20,7 @@ const categories = [
   "Certificates",
   "Events",
   "BeforeAfter",
+  "Others",
 ];
 
 export default function Gallery() {
