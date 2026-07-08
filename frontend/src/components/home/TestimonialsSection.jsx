@@ -1,12 +1,29 @@
+import { useState } from "react";
+import TestimonialModal from "./modal/TestimonialModal";
+
 const TestimonialsSection = ({ testimonials = [] }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   if (!testimonials.length) return null;
 
   return (
     <section id="testimonials" className="container scroll-mt-28 py-10 lg:py-14">
-      <div className="text-center">
-        <p className="text-xs font-extrabold uppercase tracking-wide text-blue-600">Patient Testimonials</p>
-        <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">What Our Patients Say</h2>
+      <div className="flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-end">
+        <div className="text-center sm:text-left">
+          <p className="text-xs font-extrabold uppercase tracking-wide text-blue-600">Patient Testimonials</p>
+          <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">What Our Patients Say</h2>
+        </div>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700 active:scale-95"
+        >
+          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
+          </svg>
+          Share Your Experience
+        </button>
       </div>
+
       <div className="mt-8 grid gap-5 lg:grid-cols-3">
         {testimonials.map((item, index) => (
           <article key={item._id || index} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
@@ -27,7 +44,13 @@ const TestimonialsSection = ({ testimonials = [] }) => {
           </article>
         ))}
       </div>
-      <div className="mt-6 flex justify-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-600" /><span className="h-2 w-2 rounded-full bg-slate-300" /><span className="h-2 w-2 rounded-full bg-slate-300" /></div>
+      <div className="mt-6 flex justify-center gap-2">
+        <span className="h-2 w-2 rounded-full bg-blue-600" />
+        <span className="h-2 w-2 rounded-full bg-slate-300" />
+        <span className="h-2 w-2 rounded-full bg-slate-300" />
+      </div>
+
+      <TestimonialModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 };
