@@ -1,23 +1,29 @@
-import ApiError from '../utils/ApiError.js';
-import env from '../config/env.js';
+import ApiError from "../utils/ApiError.js";
+import { STATUS_CODES } from "../constants/index.js";
 
-const errorMiddleware = (err, req, res, next) => {
-  let error = err;
+const errorMiddleware = (err, _req, res, _next) => {
+  const statusCode =
+    err instanceof ApiError
+      ? err.statusCode
+      : err.statusCode || STATUS_CODES.INTERNAL_SERVER_ERROR;
 
-  if (!(error instanceof ApiError)) {
-    const statusCode = error.statusCode || 500;
-    const message = error.message || 'Something went wrong';
-    error = new ApiError(statusCode, message, error?.errors || [], err.stack);
-  }
+  const message =
+    err instanceof ApiError
+      ? err.message
+      : err.message || "Internal Server Error";
 
-  const response = {
+  const errors = err instanceof ApiError ? err.errors || [] : [];
+
+  console.error("ERROR:", err);
+
+  return res.status(statusCode).json({
     success: false,
-    message: error.message,
-    errors: error.errors,
-    ...(env.nodeEnv === 'development' ? { stack: error.stack } : {}),
-  };
-
-  return res.status(error.statusCode).json(response);
+    message,
+    errors,
+    ...(process.env.NODE_ENV === "development" && {
+      stack: err.stack,
+    }),
+  });
 };
 
 export default errorMiddleware;

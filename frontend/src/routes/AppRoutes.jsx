@@ -1,11 +1,13 @@
-import { Routes, Route } from 'react-router-dom';
-import MainLayout from '../layout/MainLayout';
-import Home from '../pages/Home';
-import Doctor from '../pages/Doctor';
-import Gallery from '../pages/Gallery';
-import ServiceDetail from '../pages/ServiceDetail';
-import AdminLogin from '../pages/AdminLogin';
-import AdminDashboard from '../pages/AdminDashboard';
+import { Routes, Route } from "react-router-dom";
+import MainLayout from "../layout/MainLayout";
+import Home from "../pages/Home";
+import Doctor from "../pages/Doctor";
+import Gallery from "../pages/Gallery";
+import ServiceDetail from "../pages/ServiceDetail";
+import AdminLogin from "../pages/AdminLogin";
+import AdminDashboard from "../pages/AdminDashboard";
+import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 
 const AppRoutes = () => {
   return (
@@ -18,9 +20,25 @@ const AppRoutes = () => {
         <Route path="/services/:slug" element={<ServiceDetail />} />
       </Route>
 
-      {/* Admin Routes */}
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin" element={<AdminDashboard />} />
+      {/* Public-only route */}
+      <Route
+        path="/admin/login"
+        element={
+          <PublicRoute>
+            <AdminLogin />
+          </PublicRoute>
+        }
+      />
+
+      {/* Protected Admin Route */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute allowedRoles={["SUPER_ADMIN", "ADMIN"]}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

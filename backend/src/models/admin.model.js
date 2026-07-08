@@ -89,8 +89,6 @@ const adminSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-adminSchema.index({ email: 1 }, { unique: true });
 adminSchema.index({ role: 1, isActive: 1 });
 
 adminSchema.virtual("isLocked").get(function () {
