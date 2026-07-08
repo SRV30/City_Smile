@@ -1,4 +1,5 @@
 import { iconMap } from './iconMap';
+import heroImg from "../../assets/heroImg.jpeg"
 
 const Stars = ({ rating = 5 }) => (
   <span className="text-yellow-400 tracking-[2px]" aria-label={`${rating} star rating`}>
@@ -10,9 +11,9 @@ const Hero = ({ hero }) => {
   if (!hero) return null;
 
   return (
-    <section id="home" className="relative overflow-hidden bg-[#062f77] text-white lg:rounded-b-[2rem]">
+    <section id="home" className="relative overflow-hidden bg-[#062f77] text-white lg:rounded-b-4xl">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(42,129,255,.45),transparent_30%),linear-gradient(115deg,#073b91_0%,#05245f_52%,rgba(5,36,95,.65)_100%)]" />
-      <div className="container relative grid min-h-[640px] items-center gap-8 pt-28 pb-24 lg:grid-cols-[1fr_1.05fr] lg:pt-32">
+      <div className="container relative grid min-h-160 items-center gap-8 pt-28 pb-24 lg:grid-cols-[1fr_1.05fr] lg:pt-32">
         <div className="z-10 max-w-2xl">
           {hero.eyebrow && (
             <p className="mb-5 inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-semibold shadow-lg ring-1 ring-white/10 backdrop-blur">
@@ -52,8 +53,8 @@ const Hero = ({ hero }) => {
         </div>
 
         <div className="relative z-0 self-end lg:absolute lg:bottom-0 lg:right-0 lg:w-[58%]">
-          <img src={hero.heroImage} alt={hero.heroImageAlt} className="ml-auto max-h-[590px] w-full object-cover object-center lg:[clip-path:inset(0_0_0_0_round_0)]" />
-          <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[#062f77] to-transparent lg:hidden" />
+          <img src={heroImg} alt={hero.heroImageAlt} className="ml-auto max-h-147.5 w-full object-cover object-center lg:[clip-path:inset(0_0_0_0_round_0)]" />
+          <div className="absolute inset-y-0 left-0 w-1/3 bg-linear-to-r from-[#062f77] to-transparent lg:hidden" />
         </div>
       </div>
     </section>

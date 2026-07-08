@@ -8,6 +8,8 @@ import AdminLogin from "../pages/AdminLogin";
 import AdminDashboard from "../pages/AdminDashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+import AllServices from "../pages/AllServices";
+import AboutMe from "../pages/AboutMe";
 
 const AppRoutes = () => {
   return (
@@ -18,6 +20,8 @@ const AppRoutes = () => {
         <Route path="/doctor" element={<Doctor />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/services/:slug" element={<ServiceDetail />} />
+        <Route path="/services" element={<AllServices />} />
+        <Route path="/about" element={<AboutMe />} />
       </Route>
 
       {/* Public-only route */}

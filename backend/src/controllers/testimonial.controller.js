@@ -16,8 +16,8 @@ export const submitTestimonial = asyncHandler(async (req, res) => {
 
   const testimonial = await testimonialService.createTestimonial({
     ...validatedData,
-    approved: false,
-    featured: false,
+    approved: true,
+    featured: true,
   });
 
   return res

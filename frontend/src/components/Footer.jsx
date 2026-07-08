@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="bg-[#062f77] py-10 text-white lg:rounded-t-[1.5rem]">
       <div className="container grid gap-8 md:grid-cols-4">
         <div>
-          <img src={logo} alt="City Smile Dental Clinic" className="h-12 w-auto" />
+          <img src={logo} alt="City Smile Dental & Implant Clinic" className="h-12 w-auto" />
           <p className="mt-5 text-sm leading-7 text-blue-50">We are committed to providing the highest quality dental care in a comfortable and friendly environment.</p>
           <div className="mt-5 flex gap-3"><span className="grid h-9 w-9 place-items-center rounded-full bg-white/10">f</span><span className="grid h-9 w-9 place-items-center rounded-full bg-white/10">◎</span><span className="grid h-9 w-9 place-items-center rounded-full bg-white/10">☏</span></div>
         </div>
@@ -27,7 +27,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="container mt-8 border-t border-white/10 pt-5 text-center text-xs text-blue-50 md:flex md:justify-between">
-        <p>© 2026 {settings?.clinicName || 'City Smile Dental Clinic'}. All Rights Reserved.</p>
+        <p>© 2026 {settings?.clinicName || 'City Smile Dental & Implant Clinic'}. All Rights Reserved.</p>
         <p>Designed with ❤️ for Healthy Smiles</p>
       </div>
     </footer>

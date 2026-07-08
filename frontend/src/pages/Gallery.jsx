@@ -80,18 +80,18 @@ const Gallery = () => {
   return (
     <main className="min-h-screen bg-gray-50 pb-20">
       <Helmet>
-        <title>Gallery | City Smile Dental Clinic</title>
+        <title>Gallery | City Smile Dental & Implant Clinic</title>
         <meta name="description" content="Explore our dental clinic, advanced treatments, community camps, and happy patient smiles. View our premium gallery of dental success stories." />
-        <meta property="og:title" content="Gallery | City Smile Dental Clinic" />
+        <meta property="og:title" content="Gallery | City Smile Dental & Implant Clinic" />
         <meta property="og:description" content="Explore our dental clinic, advanced treatments, community camps, and happy patient smiles." />
-        <meta name="twitter:title" content="Gallery | City Smile Dental Clinic" />
+        <meta name="twitter:title" content="Gallery | City Smile Dental & Implant Clinic" />
         <meta name="twitter:description" content="Explore our dental clinic, advanced treatments, community camps, and happy patient smiles." />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ImageGallery",
-            "name": "City Smile Dental Clinic Gallery",
-            "description": "A collection of photos from City Smile Dental Clinic including treatments, camps, and clinic facilities.",
+            "name": "City Smile Dental & Implant Clinic Gallery",
+            "description": "A collection of photos from City Smile Dental & Implant Clinic including treatments, camps, and clinic facilities.",
             "url": window.location.href
           })}
         </script>

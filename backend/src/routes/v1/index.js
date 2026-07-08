@@ -52,7 +52,7 @@ router.get(
       new ApiResponse(
         STATUS_CODES.OK,
         {
-          projectName: "City Smile Dental Clinic",
+          projectName: "City Smile Dental & Implant Clinic",
           apiVersion: "1.0.0",
           nodeVersion: process.version,
         },

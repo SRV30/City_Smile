@@ -75,7 +75,7 @@ const AdminLogin = () => {
             <Link to="/" className="inline-flex items-center gap-3">
               <img
                 src={logo}
-                alt="City Smile Dental Clinic"
+                alt="City Smile Dental & Implant Clinic"
                 className="h-12 w-auto"
               />
             </Link>
@@ -256,7 +256,7 @@ const AdminLogin = () => {
             </div>
 
             <p className="mt-6 text-center text-xs text-slate-500">
-              © 2026 City Smile Dental Clinic. All Rights Reserved.
+              © 2026 City Smile Dental & Implant Clinic. All Rights Reserved.
             </p>
           </div>
         </div>

@@ -36,8 +36,8 @@ const socialLinksSchema = new mongoose.Schema({
 }, { _id: false });
 
 const seoSchema = new mongoose.Schema({
-  metaTitle: { type: String, default: 'Dr. Aditya Shivi | City Smile Dental Clinic' },
-  metaDescription: { type: String, default: 'Meet Dr. Aditya Shivi, Oral & Dental Surgeon and RCT Specialist & Implantologist at City Smile Dental Clinic.' },
+  metaTitle: { type: String, default: 'Dr. Aditya Shivi | City Smile Dental & Implant Clinic' },
+  metaDescription: { type: String, default: 'Meet Dr. Aditya Shivi, Oral & Dental Surgeon and RCT Specialist & Implantologist at City Smile Dental & Implant Clinic.' },
 }, { _id: false });
 
 const doctorSchema = new mongoose.Schema({

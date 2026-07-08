@@ -50,7 +50,7 @@ const ContactSection = ({ contact, settings }) => {
 
     const whatsappMessage = `
 ━━━━━━━━━━━━━━━━━━━━━━
-🦷 *CITY SMILE DENTAL CLINIC*
+🦷 *City Smile Dental & Implant Clinic*
 *Appointment Request*
 ━━━━━━━━━━━━━━━━━━━━━━
 

@@ -1,5 +1,5 @@
 const DoctorHero = ({ doctor, phone }) => (
-  <section className="relative overflow-hidden bg-[#062f77] pt-28 text-white lg:rounded-b-[2rem]">
+  <section className="relative overflow-hidden bg-[#062f77] pt-28 text-white lg:rounded-b-4xl">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(42,129,255,.45),transparent_30%),linear-gradient(115deg,#073b91_0%,#05245f_52%,#031a48_100%)]" />
     <div className="container relative grid items-center gap-10 pb-16 lg:grid-cols-[1fr_0.85fr] lg:pt-12">
       <div>
