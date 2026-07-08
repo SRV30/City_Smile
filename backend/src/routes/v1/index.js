@@ -8,6 +8,7 @@ import publicContentRoutes from "./publicContent.routes.js";
 import doctorRoutes from "./doctor.routes.js";
 import galleryRoutes from "./gallery.routes.js";
 import authRoutes from "./auth.routes.js";
+import { publicRouter as testimonialRoutes, adminRouter as adminTestimonialRoutes } from "./testimonial.routes.js";
 import { STATUS_CODES } from "../../constants/index.js";
 
 const router = Router();
@@ -31,12 +32,16 @@ router.get(
 // Auth routes
 router.use("/admin/auth", authRoutes);
 
+// Admin CMS routes
+router.use("/admin/testimonials", adminTestimonialRoutes);
+
 // Public CMS/content routes
 router.use("/settings", settingsRoutes);
 router.use("/home", homeRoutes);
 router.use("/services", serviceRoutes);
 router.use("/doctor", doctorRoutes);
 router.use("/gallery", galleryRoutes);
+router.use("/testimonials", testimonialRoutes);
 router.use("/", publicContentRoutes);
 
 // Version endpoint
