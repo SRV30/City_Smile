@@ -1,6 +1,8 @@
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
+import TestimonialManagement from "./Admin/TestimonialManagement";
 
 const sidebarItems = [
   "Dashboard",
@@ -62,6 +64,7 @@ const recentAppointments = [
 const AdminDashboard = () => {
   const { admin, logout, refreshing, loading } = useAuth();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("Dashboard");
 
   const handleLogout = async () => {
     await logout();
@@ -113,15 +116,16 @@ const AdminDashboard = () => {
                 <button
                   key={item}
                   type="button"
+                  onClick={() => setActiveTab(item)}
                   className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold transition ${
-                    active
+                    activeTab === item
                       ? "bg-white text-blue-700 shadow-lg shadow-black/10"
                       : "text-white/80 hover:bg-white/10 hover:text-white"
                   }`}
                 >
                   <span
                     className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-                      active
+                      activeTab === item
                         ? "bg-blue-50 text-blue-600"
                         : "bg-white/10 text-white"
                     }`}
@@ -147,6 +151,11 @@ const AdminDashboard = () => {
 
         <main className="flex-1">
           <div className="px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+            {activeTab === "Testimonials" ? (
+              <div className="rounded-[30px] bg-white p-6 shadow-[0_18px_60px_rgba(15,61,157,0.08)] sm:p-8">
+                <TestimonialManagement />
+              </div>
+            ) : (
             <div className="rounded-[30px] bg-[linear-gradient(135deg,#ffffff_0%,#f5f8ff_100%)] p-5 shadow-[0_18px_60px_rgba(15,61,157,0.08)] sm:p-6">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
@@ -431,6 +440,7 @@ const AdminDashboard = () => {
                 </section>
               </div>
             </div>
+            )}
           </div>
         </main>
       </div>
