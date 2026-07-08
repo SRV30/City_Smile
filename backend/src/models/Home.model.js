@@ -132,7 +132,7 @@ const defaultStatistics = [
   { value: '5000+', label: 'Happy Patients', icon: 'users' },
   { value: '10+', label: 'Years Experience', icon: 'award' },
   { value: 'ISO 9001:2015', label: 'Certified Clinic', icon: 'shield' },
-  { value: '4.9/5', label: 'Google Rating', icon: 'star' },
+  { value: '5', label: 'Google Rating', icon: 'star' },
 ];
 
 const homeSchema = new mongoose.Schema({
