@@ -11,8 +11,11 @@ import TreatmentProcess from '../components/home/TreatmentProcess';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import { useSettings } from '../context/SettingsContext';
 import { getHome } from '../services/home.service';
-import { getContactContent, getFaqs, getGalleryPreview, getTestimonials } from '../services/publicContent.service';
+import { getContactContent, getFaqs, getGalleryPreview } from '../services/publicContent.service';
 import { getServices } from '../services/services.service';
+import { getApprovedTestimonials } from '../services/testimonial.service';
+import { getRandomItems } from '../utils/random.utils';
+import { MAX_DISPLAY_TESTIMONIALS, TESTIMONIAL_PLACEHOLDERS } from '../constants/testimonial.constants';
 
 const Home = () => {
   const [home, setHome] = useState(null);
@@ -27,12 +30,27 @@ const Home = () => {
   useEffect(() => {
     let isMounted = true;
 
-    Promise.all([getHome(), getServices(), getTestimonials(), getFaqs(), getGalleryPreview(), getContactContent()])
+    Promise.all([
+      getHome(),
+      getServices(),
+      getApprovedTestimonials(),
+      getFaqs(),
+      getGalleryPreview(),
+      getContactContent(),
+    ])
       .then(([homeResponse, servicesResponse, testimonialsResponse, faqsResponse, galleryResponse, contactResponse]) => {
         if (isMounted) {
           setHome(homeResponse.data);
           setServices(servicesResponse.data);
-          setTestimonials(testimonialsResponse.data);
+
+          // Handle testimonials with randomization and fallback
+          const fetchedTestimonials = testimonialsResponse.data || [];
+          if (fetchedTestimonials.length > 0) {
+            setTestimonials(getRandomItems(fetchedTestimonials, MAX_DISPLAY_TESTIMONIALS));
+          } else {
+            setTestimonials(TESTIMONIAL_PLACEHOLDERS);
+          }
+
           setFaqs(faqsResponse.data);
           setGalleryPreview(galleryResponse.data);
           setContact(contactResponse.data);
