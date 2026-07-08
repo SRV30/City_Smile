@@ -14,18 +14,32 @@ import { getHome } from '../services/home.service';
 import { getContactContent, getFaqs, getGalleryPreview } from '../services/publicContent.service';
 import { getServices } from '../services/services.service';
 import { getApprovedTestimonials } from '../services/testimonial.service';
-import { getRandomItems } from '../utils/random.utils';
-import { MAX_DISPLAY_TESTIMONIALS, TESTIMONIAL_PLACEHOLDERS } from '../constants/testimonial.constants';
 
 const Home = () => {
   const [home, setHome] = useState(null);
   const [status, setStatus] = useState('loading');
   const [services, setServices] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(true);
+  const [testimonialsError, setTestimonialsError] = useState(false);
   const [faqs, setFaqs] = useState([]);
   const [galleryPreview, setGalleryPreview] = useState(null);
   const [contact, setContact] = useState(null);
   const { settings, loading: settingsLoading } = useSettings();
+
+  const fetchTestimonials = async () => {
+    setTestimonialsLoading(true);
+    setTestimonialsError(false);
+    try {
+      const response = await getApprovedTestimonials();
+      setTestimonials(response.data || []);
+    } catch (error) {
+      console.error('Failed to fetch testimonials:', error);
+      setTestimonialsError(true);
+    } finally {
+      setTestimonialsLoading(false);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -33,31 +47,23 @@ const Home = () => {
     Promise.all([
       getHome(),
       getServices(),
-      getApprovedTestimonials(),
+      fetchTestimonials(),
       getFaqs(),
       getGalleryPreview(),
       getContactContent(),
     ])
-      .then(([homeResponse, servicesResponse, testimonialsResponse, faqsResponse, galleryResponse, contactResponse]) => {
+      .then(([homeResponse, servicesResponse, _testimonialsResult, faqsResponse, galleryResponse, contactResponse]) => {
         if (isMounted) {
           setHome(homeResponse.data);
           setServices(servicesResponse.data);
-
-          // Handle testimonials with randomization and fallback
-          const fetchedTestimonials = testimonialsResponse.data || [];
-          if (fetchedTestimonials.length > 0) {
-            setTestimonials(getRandomItems(fetchedTestimonials, MAX_DISPLAY_TESTIMONIALS));
-          } else {
-            setTestimonials(TESTIMONIAL_PLACEHOLDERS);
-          }
-
           setFaqs(faqsResponse.data);
           setGalleryPreview(galleryResponse.data);
           setContact(contactResponse.data);
           setStatus('success');
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('Failed to fetch home content:', err);
         if (isMounted) setStatus('error');
       });
 
@@ -82,7 +88,12 @@ const Home = () => {
       <ServicesSection services={services} />
       <WhyChooseUs whyChooseUs={home?.whyChooseUs} />
       <TreatmentProcess process={home?.treatmentProcess} />
-      <TestimonialsSection testimonials={testimonials} />
+      <TestimonialsSection
+        testimonials={testimonials}
+        isLoading={testimonialsLoading}
+        isError={testimonialsError}
+        onRetry={fetchTestimonials}
+      />
       <GalleryPreview gallery={galleryPreview} />
       <FaqSection faqs={faqs} />
       <ContactSection contact={contact} settings={settings} />

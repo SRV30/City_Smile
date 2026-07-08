@@ -12,12 +12,14 @@ export const createTestimonial = async (testimonialData) => {
 };
 
 /**
- * Get all approved testimonials for public display
+ * Get all approved 5-star testimonials for public display
  * @returns {Promise<Testimonial[]>}
  */
 export const getPublicTestimonials = async () => {
-  return await Testimonial.find({ approved: true }).sort({
-    featured: -1,
+  return await Testimonial.find({
+    approved: true,
+    rating: 5,
+  }).sort({
     createdAt: -1,
   });
 };
