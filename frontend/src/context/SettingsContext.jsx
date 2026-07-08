@@ -1,49 +1,42 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { fetchSettings } from "../services/content.service";
-import { fallbackSettings } from "../data/fallbackContent";
+import { createContext, useContext, useState, useEffect } from 'react';
+import { getSettings } from '../services/settings.service';
 
-const SettingsContext = createContext(null);
+const SettingsContext = createContext();
 
-export function SettingsProvider({ children }) {
-  const [settings, setSettings] = useState(fallbackSettings);
+export const SettingsProvider = ({ children }) => {
+  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const loadSettings = async () => {
-    setLoading(true);
+  const fetchSettings = async () => {
     try {
-      const data = await fetchSettings();
-      if (data && typeof data === "object") {
-        setSettings((prev) => ({ ...prev, ...data }));
-      }
-    } catch {
-      setSettings(fallbackSettings);
+      setLoading(true);
+      const data = await getSettings();
+      setSettings(data);
+      setError(null);
+    } catch (err) {
+      setError('Failed to load clinic settings');
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadSettings();
+    fetchSettings();
   }, []);
 
-  const value = useMemo(
-    () => ({
-      settings,
-      loading,
-      refreshSettings: loadSettings,
-    }),
-    [settings, loading],
-  );
-
   return (
-    <SettingsContext.Provider value={value}>
+    <SettingsContext.Provider value={{ settings, loading, error, refreshSettings: fetchSettings }}>
       {children}
     </SettingsContext.Provider>
   );
-}
+};
 
 export const useSettings = () => {
-  const ctx = useContext(SettingsContext);
-  if (!ctx) throw new Error("useSettings must be used inside SettingsProvider");
-  return ctx;
+  const context = useContext(SettingsContext);
+  if (!context) {
+    throw new Error('useSettings must be used within a SettingsProvider');
+  }
+  return context;
 };

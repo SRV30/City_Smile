@@ -1,7 +1,6 @@
 import app from './app.js';
 import connectDb from './db/connect.js';
 import env from './config/env.js';
-import { seedSuperAdmin } from './db/seedSuperAdmin.js';
 
 const startServer = async () => {
   try {
@@ -11,8 +10,6 @@ const startServer = async () => {
         // In some cases you might want to exit, but for demonstration we can continue
         // process.exit(1);
     });
-
-    await seedSuperAdmin();
 
     const PORT = env.port || 5000;
     const server = app.listen(PORT, () => {

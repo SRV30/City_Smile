@@ -1,94 +1,37 @@
-import { Link } from "react-router-dom";
-import { useSettings } from "../context/SettingsContext";
-import { IconBadge } from "./UI";
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
+import { useSettings } from '../context/SettingsContext';
 
-const footerLinks = [
-  { label: "Home", href: "/#home" },
-  { label: "About", href: "/#about" },
-  { label: "Services", href: "/#services" },
-  { label: "Gallery", href: "/#gallery" },
-  { label: "Contact", href: "/#contact" },
-];
-
-export default function Footer() {
+const Footer = () => {
   const { settings } = useSettings();
 
   return (
-    <footer className="bg-[#071f4b] text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-2 lg:grid-cols-4 lg:px-6">
+    <footer className="bg-[#062f77] py-10 text-white lg:rounded-t-[1.5rem]">
+      <div className="container grid gap-8 md:grid-cols-4">
         <div>
-          <div className="flex items-center gap-3">
-            <IconBadge className="bg-white/10 text-white">C</IconBadge>
-            <div>
-              <p className="text-sm font-bold">{settings.clinicName}</p>
-              <p className="text-xs text-blue-100">Dental & Implant Clinic</p>
-            </div>
-          </div>
-          <p className="mt-5 max-w-sm text-sm leading-7 text-blue-100">
-            We are committed to providing the highest quality dental care in a
-            comfortable and friendly environment.
-          </p>
+          <img src={logo} alt="City Smile Dental Clinic" className="h-12 w-auto" />
+          <p className="mt-5 text-sm leading-7 text-blue-50">We are committed to providing the highest quality dental care in a comfortable and friendly environment.</p>
+          <div className="mt-5 flex gap-3"><span className="grid h-9 w-9 place-items-center rounded-full bg-white/10">f</span><span className="grid h-9 w-9 place-items-center rounded-full bg-white/10">◎</span><span className="grid h-9 w-9 place-items-center rounded-full bg-white/10">☏</span></div>
         </div>
-
         <div>
-          <p className="text-sm font-bold">Quick Links</p>
-          <div className="mt-4 grid gap-2 text-sm text-blue-100">
-            {footerLinks.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="transition hover:text-white"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+          <h3 className="font-extrabold">Quick Links</h3>
+          <div className="mt-4 grid gap-2 text-sm text-blue-50"><a href="#home">Home</a><a href="#about">About Us</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact Us</a></div>
         </div>
-
         <div>
-          <p className="text-sm font-bold">Contact</p>
-          <div className="mt-4 grid gap-2 text-sm text-blue-100">
-            <p>{settings.phone}</p>
-            <p>{settings.clinicEmail}</p>
-            <p>{settings.address}</p>
-          </div>
+          <h3 className="font-extrabold">Our Services</h3>
+          <div className="mt-4 grid gap-2 text-sm text-blue-50"><Link to="/services/dental-implants">Dental Implants</Link><Link to="/services/root-canal-treatment">Root Canal Treatment</Link><Link to="/services/teeth-whitening">Teeth Whitening</Link><Link to="/services/braces-aligners">Braces & Aligners</Link></div>
         </div>
-
         <div>
-          <p className="text-sm font-bold">Working Hours</p>
-          <p className="mt-4 text-sm text-blue-100">{settings.workingHours}</p>
-          <div className="mt-5 flex items-center gap-3 text-blue-100">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/15 px-3 py-2"
-            >
-              f
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/15 px-3 py-2"
-            >
-              ig
-            </a>
-            <a
-              href={`https://wa.me/${settings.phone.replace(/[^\d]/g, "")}`}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/15 px-3 py-2"
-            >
-              wa
-            </a>
-          </div>
+          <h3 className="font-extrabold">Contact Info</h3>
+          <div className="mt-4 grid gap-3 text-sm text-blue-50"><p>☎ {settings?.phone}</p><p>✉ {settings?.clinicEmail}</p><p>⌖ {settings?.address}</p></div>
         </div>
       </div>
-
-      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-blue-100">
-        © 2026 City Smile Dental & Implant Clinic. All rights reserved.
+      <div className="container mt-8 border-t border-white/10 pt-5 text-center text-xs text-blue-50 md:flex md:justify-between">
+        <p>© 2026 {settings?.clinicName || 'City Smile Dental Clinic'}. All Rights Reserved.</p>
+        <p>Designed with ❤️ for Healthy Smiles</p>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;
