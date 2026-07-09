@@ -1,16 +1,15 @@
 import dentalImplantImage from "../assets/services/dental-implant.png";
-// import rootCanalImage from "../assets/services/root-canal-treatment.jpg";
-// import ultrasonicScalingImage from "../assets/services/ultrasonic-scaling.jpg";
+import rootCanalImage from "../assets/services/root-canal-treatment.png";
+import ultrasonicScalingImage from "../assets/services/ultrasonic-scaling.png";
 // import smileDesigningImage from "../assets/services/smile-designing.jpg";
-// import dentalCrownBridgeImage from "../assets/services/dental-crown-bridge.jpg";
 import dentalXRayImage from "../assets/services/dental-x-ray.png";
-// import teethColouredFillingImage from "../assets/services/teeth-coloured-filling.jpg";
-// import completePartialDentureImage from "../assets/services/complete-partial-denture.jpg";
+import teethColouredFillingImage from "../assets/services/teeth-coloured-filling.png";
+import completePartialDentureImage from "../assets/services/complete-partial-denture.png";
 // import teethWhiteningImage from "../assets/services/teeth-whitening.jpg";
 // import orthodonticTreatmentImage from "../assets/services/orthodontic-treatment.jpg";
 // import pediatricDentistryImage from "../assets/services/pediatric-dentistry.jpg";
-// import dentalVeneersImage from "../assets/services/dental-veneers.jpg";
-// import dentalBridgesImage from "../assets/services/dental-bridges.jpg";
+import toothExtraction from "../assets/services/tooth-extraction.png";
+import impaction from "../assets/services/impaction.jpg";
 
 
 export const serviceContent = {
@@ -151,7 +150,7 @@ export const serviceContent = {
     overview: {
       description:
         "Root Canal Treatment eliminates infection from inside the tooth's root canals, sanitizes the space, and seals it safely to prevent reinfection, saving the natural tooth shell.",
-      image: "",
+      image: rootCanalImage,
     },
     whoNeeds: [
       {
@@ -264,7 +263,7 @@ export const serviceContent = {
     overview: {
       description:
         "Ultrasonic scaling utilizes precise micro-vibrations and water irrigation streams to blast away calcified tartar from tooth surfaces and below gum margins safely.",
-      image: "",
+      image: ultrasonicScalingImage,
     },
     whoNeeds: [
       { title: "Bleeding Gums", desc: "Bleeding while brushing or flossing" },
@@ -678,7 +677,7 @@ export const serviceContent = {
     overview: {
       description:
         "Teeth-colored fillings use a durable, biocompatible composite resin material customized to match the exact shade of your enamel, restoring both beauty and function to a decayed tooth structure.",
-      image: "",
+      image: teethColouredFillingImage,
     },
     whoNeeds: [
       {
@@ -787,7 +786,7 @@ export const serviceContent = {
     overview: {
       description:
         "Dentures are custom-crafted removable oral appliances built to replace missing teeth and surrounding gum tissues, restoring your confident facial support, chewing alignment, and speech.",
-      image: "",
+      image: completePartialDentureImage,
     },
     whoNeeds: [
       {
@@ -1013,7 +1012,7 @@ export const serviceContent = {
     overview: {
       description:
         "A dental extraction safely and precisely separates a non-savable tooth from its surrounding bone socket under clean, controlled conditions, prioritizing minimal trauma to neighbor tissues.",
-      image: "",
+      image: toothExtraction,
     },
     whoNeeds: [
       {
@@ -1122,7 +1121,7 @@ export const serviceContent = {
     overview: {
       description:
         "An impaction removal is a specialized oral surgery that safely accesses and extracts third molars (wisdom teeth) when they are trapped underneath bone or gum tissues, protecting your entire bite alignment.",
-      image: "",
+      image: impaction,
     },
     whoNeeds: [
       {

@@ -11,6 +11,7 @@ import AllServices from "../pages/AllServices";
 import AboutMe from "../pages/AboutMe";
 import ContactPage from "../pages/Contact";
 import ServiceDetail from "../pages/ServiceDetail";
+import Blog from "../pages/Blog";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
         <Route path="/services" element={<AllServices />} />
         <Route path="/about" element={<AboutMe />} />
         <Route path="/contact" element={<ContactPage />} />
+           <Route path="/blog" element={<Blog />} />
       </Route>
 
       {/* Public-only route */}
