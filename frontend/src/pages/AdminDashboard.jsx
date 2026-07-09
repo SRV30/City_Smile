@@ -74,7 +74,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-[#eef4ff] text-slate-900">
       <div className="flex min-h-screen">
-        <aside className="hidden w-[290px] shrink-0 flex-col bg-[linear-gradient(180deg,#0f3d9d_0%,#082b73_100%)] px-5 py-6 text-white lg:flex">
+        <aside className="hidden w-72.5 shrink-0 flex-col bg-[linear-gradient(180deg,#0f3d9d_0%,#082b73_100%)] px-5 py-6 text-white lg:flex">
           <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-4 backdrop-blur">
             <img src={logo} alt="City Smile" className="h-10 w-auto" />
           </div>

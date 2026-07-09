@@ -4,7 +4,7 @@ import ContactSection from '../components/home/ContactSection';
 import FaqSection from '../components/home/FaqSection';
 import GalleryPreview from '../components/home/GalleryPreview';
 import Hero from '../components/home/Hero';
-import ServicesSection from '../components/home/ServicesSection';
+import ServicesSection from '../pages/ServicesSection';
 import StatisticsSection from '../components/home/StatisticsSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import TreatmentProcess from '../components/home/TreatmentProcess';

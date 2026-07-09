@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { dentalServices } from "../components/home/ServicesSection";
+import { dentalServices } from "../data/services";
 import servicesImg from "../assets/services.jpeg";
 
 const AllServices = () => {
