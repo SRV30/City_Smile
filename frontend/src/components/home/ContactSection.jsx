@@ -137,20 +137,20 @@ const ContactSection = ({ contact, settings }) => {
 
     const whatsappMessage = `*NEW APPOINTMENT BOOKING*
 
-🏥 *Clinic:* City Smile Dental & Implant Clinic
+ *Clinic:* City Smile Dental & Implant Clinic
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-👤 *PATIENT DETAILS*
+*PATIENT DETAILS*
 • *Name:* ${formData.name}
 • *Contact:* ${formData.phone}
 ${formData.email ? `• *Email:* ${formData.email}` : ""}
 
-🩺 *CLINICAL DETAILS*
+ *CLINICAL DETAILS*
 • *Treatment:* ${formData.treatment}
 • *Preferred Date:* ${formData.date}
 • *Preferred Time:* ${formData.time}
 
-📝 *ADDITIONAL NOTES*
+ *ADDITIONAL NOTES*
 ${formData.message.trim() ? `_" ${formData.message} "_` : "None"}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
