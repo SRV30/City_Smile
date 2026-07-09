@@ -1,6 +1,6 @@
 const CTASection = ({ title, description, onBookAppointment }) => {
   return (
-    <section className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl shadow-blue-600/10">
+    <section className="bg-linear-to-r from-blue-600 to-blue-700 rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl shadow-blue-600/10">
       <div>
         <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">
           {title}

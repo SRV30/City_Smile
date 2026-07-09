@@ -1,3 +1,18 @@
+import dentalImplantImage from "../assets/services/dental-implant.png";
+// import rootCanalImage from "../assets/services/root-canal-treatment.jpg";
+// import ultrasonicScalingImage from "../assets/services/ultrasonic-scaling.jpg";
+// import smileDesigningImage from "../assets/services/smile-designing.jpg";
+// import dentalCrownBridgeImage from "../assets/services/dental-crown-bridge.jpg";
+import dentalXRayImage from "../assets/services/dental-x-ray.png";
+// import teethColouredFillingImage from "../assets/services/teeth-coloured-filling.jpg";
+// import completePartialDentureImage from "../assets/services/complete-partial-denture.jpg";
+// import teethWhiteningImage from "../assets/services/teeth-whitening.jpg";
+// import orthodonticTreatmentImage from "../assets/services/orthodontic-treatment.jpg";
+// import pediatricDentistryImage from "../assets/services/pediatric-dentistry.jpg";
+// import dentalVeneersImage from "../assets/services/dental-veneers.jpg";
+// import dentalBridgesImage from "../assets/services/dental-bridges.jpg";
+
+
 export const serviceContent = {
   "dental-implant": {
     hero: {
@@ -572,7 +587,7 @@ export const serviceContent = {
     overview: {
       description:
         "Digital dental X-rays use highly advanced electronic sensors instead of traditional film to capture high-resolution images of your teeth, bone structures, and deep tissues safely and instantly.",
-      image: "",
+      image: dentalXRayImage,
     },
     whoNeeds: [
       { title: "Hidden Cavities", desc: "Decay between tight teeth spaces" },
@@ -1088,7 +1103,7 @@ export const serviceContent = {
         "Don't let a severely broken tooth damage your surrounding jaw health. Book a gentle extraction with our experts.",
     },
   },
-  impaction: {
+  "impaction": {
     hero: {
       description:
         "Specialized surgical removal for painful, trapped, or completely misaligned wisdom teeth.",

@@ -17,18 +17,18 @@ const RelatedServices = ({ currentSlug, services }) => {
             to={`/services/${service.slug}`}
             className="group bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col h-full"
           >
-            <div className="aspect-[4/3] overflow-hidden bg-slate-100 relative">
+            <div className="aspect-4/3 overflow-hidden bg-slate-100 relative">
               <img
                 src={service.image}
                 alt={service.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-            <div className="p-5 flex flex-col flex-grow">
+            <div className="p-5 flex flex-col grow">
               <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-200 line-clamp-1">
                 {service.title}
               </h3>
-              <p className="text-xs text-slate-500 mt-2 line-clamp-2 flex-grow">
+              <p className="text-xs text-slate-500 mt-2 line-clamp-2 grow">
                 {service.description ||
                   "Professional clinical dental care tailored to restore your perfect oral configurations and optimal aesthetic health."}
               </p>

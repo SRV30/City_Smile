@@ -137,14 +137,14 @@ const AllServices = () => {
 
           <div className="lg:w-1/2">
             <div className="group relative w-full overflow-hidden rounded-3xl bg-slate-200 shadow-2xl transition-all duration-500 hover:shadow-blue-900/20">
-              <div className="aspect-[4/3] w-full lg:aspect-square xl:aspect-[4/3]">
+              <div className="aspect-4/3 w-full lg:aspect-square xl:aspect-4/3">
                 <img
                   src={servicesImg}
                   alt="City Smile Dental & Implant Clinic"
                   className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
                 <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-black/10"></div>
               </div>
             </div>
